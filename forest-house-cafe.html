@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forest House Café — Dwarka, New Delhi</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --forest:   #1C3A2A;
+    --forest-lt:#2D5A3D;
+    --cream:    #F5EDD8;
+    --cream-dk: #EDE0C4;
+    --terra:    #C4622D;
+    --sage:     #8AAF8E;
+    --charcoal: #1A1A18;
+    --white:    #FDFAF4;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--white);
+    color: var(--charcoal);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.1rem 3rem;
+    background: transparent;
+    transition: background .4s, box-shadow .4s;
+  }
+  nav.scrolled {
+    background: var(--forest);
+    box-shadow: 0 2px 20px rgba(0,0,0,.3);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--cream);
+    letter-spacing: .04em;
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--terra); }
+  .nav-links { display: flex; gap: 2.2rem; list-style: none; }
+  .nav-links a {
+    font-size: .85rem;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--cream);
+    text-decoration: none;
+    opacity: .85;
+    transition: opacity .2s;
+  }
+  .nav-links a:hover { opacity: 1; color: var(--terra); }
+  .nav-cta {
+    background: var(--terra);
+    color: var(--white) !important;
+    padding: .45rem 1.2rem !important;
+    border-radius: 2px;
+    opacity: 1 !important;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--forest);
+    overflow: hidden;
+  }
+
+  /* Botanical SVG background */
+  .hero-leaves {
+    position: absolute; inset: 0;
+    opacity: .18;
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative; z-index: 2;
+    text-align: center;
+    padding: 2rem;
+    max-width: 780px;
+  }
+  .hero-eyebrow {
+    font-family: 'Caveat', cursive;
+    font-size: 1.35rem;
+    color: var(--terra);
+    display: block;
+    margin-bottom: .6rem;
+    letter-spacing: .04em;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    font-weight: 700;
+    line-height: 1.05;
+    color: var(--cream);
+    margin-bottom: 1.2rem;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--sage);
+  }
+  .hero-sub {
+    font-size: 1.05rem;
+    color: var(--cream);
+    opacity: .7;
+    max-width: 460px;
+    margin: 0 auto 2.4rem;
+    line-height: 1.65;
+    font-weight: 300;
+  }
+  .hero-badges {
+    display: flex; gap: .8rem; justify-content: center; flex-wrap: wrap;
+    margin-bottom: 2.6rem;
+  }
+  .badge {
+    background: rgba(245,237,216,.1);
+    border: 1px solid rgba(245,237,216,.2);
+    color: var(--cream);
+    font-size: .78rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: .4rem .9rem;
+    border-radius: 100px;
+  }
+  .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--terra);
+    color: var(--white);
+    padding: .85rem 2rem;
+    font-size: .9rem;
+    font-weight: 500;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    border: none; cursor: pointer;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: background .2s, transform .2s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: #a8522a; transform: translateY(-1px); }
+  .btn-ghost {
+    background: transparent;
+    color: var(--cream);
+    padding: .85rem 2rem;
+    font-size: .9rem;
+    font-weight: 500;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    border: 1px solid rgba(245,237,216,.4);
+    cursor: pointer;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: border-color .2s, transform .2s;
+    display: inline-block;
+  }
+  .btn-ghost:hover { border-color: var(--cream); transform: translateY(-1px); }
+
+  .hero-scroll {
+    position: absolute; bottom: 2.2rem; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: .4rem;
+    color: var(--cream); opacity: .4; font-size: .72rem; letter-spacing: .12em;
+    text-transform: uppercase;
+  }
+  .scroll-line {
+    width: 1px; height: 40px;
+    background: linear-gradient(to bottom, var(--cream), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+  @keyframes scrollPulse { 0%,100%{opacity:.4;} 50%{opacity:1;} }
+
+  /* ── RATING STRIP ── */
+  .strip {
+    background: var(--cream);
+    display: flex; align-items: center; justify-content: center;
+    gap: 3rem; padding: 1.4rem 2rem;
+    flex-wrap: wrap;
+  }
+  .strip-item { display: flex; align-items: center; gap: .6rem; }
+  .strip-item .num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; font-weight: 700;
+    color: var(--forest);
+  }
+  .strip-item .label {
+    font-size: .8rem; color: #666;
+    line-height: 1.3;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+  }
+  .stars { color: var(--terra); font-size: 1rem; letter-spacing: .1em; }
+  .divider-v { width: 1px; height: 40px; background: var(--cream-dk); }
+
+  /* ── SECTION COMMON ── */
+  section { padding: 6rem 2rem; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+  .section-label {
+    font-family: 'Caveat', cursive;
+    font-size: 1.1rem;
+    color: var(--terra);
+    display: block;
+    margin-bottom: .5rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--forest);
+    margin-bottom: 1.2rem;
+  }
+  .section-body {
+    font-size: 1rem; line-height: 1.75; color: #555;
+    font-weight: 300; max-width: 560px;
+  }
+
+  /* ── ABOUT ── */
+  .about { background: var(--white); }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+  .about-visual {
+    position: relative;
+  }
+  .about-card {
+    background: var(--forest);
+    border-radius: 4px;
+    padding: 3rem 2.5rem;
+    color: var(--cream);
+    position: relative;
+    overflow: hidden;
+  }
+  .about-card::before {
+    content: '';
+    position: absolute; top: -30px; right: -30px;
+    width: 140px; height: 140px;
+    border-radius: 50%;
+    background: var(--forest-lt);
+    opacity: .5;
+  }
+  .about-card-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.35rem;
+    font-style: italic;
+    line-height: 1.55;
+    position: relative; z-index: 1;
+    margin-bottom: 1rem;
+  }
+  .about-card-attr {
+    font-size: .82rem;
+    opacity: .6;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+  .about-tag {
+    display: inline-block;
+    margin-top: 1.8rem;
+    background: var(--terra);
+    color: var(--white);
+    font-size: .78rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: .45rem 1rem;
+    border-radius: 2px;
+  }
+  .about-features {
+    display: flex; flex-direction: column; gap: 1rem;
+    margin-top: 2rem;
+  }
+  .feature-row {
+    display: flex; align-items: flex-start; gap: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--cream-dk);
+  }
+  .feature-row:last-child { border-bottom: none; }
+  .feature-icon {
+    width: 36px; height: 36px; flex-shrink: 0;
+    background: var(--cream);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+  }
+  .feature-text strong { font-size: .9rem; color: var(--forest); font-weight: 500; }
+  .feature-text p { font-size: .83rem; color: #777; margin-top: .1rem; }
+
+  /* ── MENU ── */
+  .menu-section { background: var(--forest); }
+  .menu-section .section-title { color: var(--cream); }
+  .menu-section .section-body { color: rgba(245,237,216,.65); }
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+  .menu-card {
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 4px;
+    padding: 1.8rem 1.6rem;
+    transition: background .25s, transform .25s;
+    cursor: default;
+  }
+  .menu-card:hover {
+    background: rgba(255,255,255,.1);
+    transform: translateY(-3px);
+  }
+  .menu-card-icon { font-size: 1.8rem; margin-bottom: .8rem; }
+  .menu-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--cream);
+    margin-bottom: .5rem;
+  }
+  .menu-card p { font-size: .85rem; color: rgba(245,237,216,.55); line-height: 1.6; }
+  .menu-card .price {
+    margin-top: 1rem;
+    font-family: 'Caveat', cursive;
+    font-size: 1.2rem;
+    color: var(--terra);
+  }
+  .menu-cta { margin-top: 2.5rem; }
+
+  /* ── VIBE ── */
+  .vibe { background: var(--cream); }
+  .vibe-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1.2rem;
+    margin-top: 3rem;
+  }
+  .vibe-tile {
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+  }
+  .vibe-tile:first-child { grid-row: span 2; }
+  .vibe-box {
+    width: 100%; height: 100%; min-height: 160px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 1.5rem;
+    text-align: center;
+  }
+  .vibe-box.green  { background: var(--forest); }
+  .vibe-box.terra  { background: var(--terra); }
+  .vibe-box.sage   { background: var(--sage); }
+  .vibe-box.cream2 { background: var(--cream-dk); }
+  .vibe-box.forest-lt { background: var(--forest-lt); }
+  .vibe-tall { min-height: 340px !important; }
+  .vibe-label {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-style: italic;
+    color: var(--cream);
+    margin-bottom: .4rem;
+  }
+  .vibe-sub { font-size: .8rem; color: rgba(245,237,216,.65); letter-spacing: .08em; text-transform: uppercase; }
+  .vibe-box.cream2 .vibe-label { color: var(--forest); }
+  .vibe-box.cream2 .vibe-sub { color: #888; }
+  .vibe-emoji { font-size: 2.5rem; margin-bottom: .7rem; }
+
+  /* ── REVIEWS ── */
+  .reviews { background: var(--white); }
+  .reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+  .review-card {
+    border: 1px solid var(--cream-dk);
+    border-radius: 4px;
+    padding: 1.8rem;
+    position: relative;
+    transition: box-shadow .2s;
+  }
+  .review-card:hover { box-shadow: 0 6px 24px rgba(28,58,42,.08); }
+  .review-card::before {
+    content: '"';
+    position: absolute; top: 1rem; right: 1.4rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 5rem;
+    color: var(--cream-dk);
+    line-height: 1;
+    pointer-events: none;
+  }
+  .review-stars { color: var(--terra); margin-bottom: .8rem; font-size: .9rem; }
+  .review-text {
+    font-size: .9rem; line-height: 1.7;
+    color: #555; font-style: italic;
+    margin-bottom: 1rem;
+  }
+  .review-author { font-size: .8rem; font-weight: 500; color: var(--forest); }
+
+  /* ── INFO / VISIT ── */
+  .visit { background: var(--cream); }
+  .visit-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+  .info-block { display: flex; flex-direction: column; gap: 1.5rem; }
+  .info-row { display: flex; align-items: flex-start; gap: 1rem; }
+  .info-icon {
+    width: 44px; height: 44px; flex-shrink: 0;
+    background: var(--forest);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+    color: var(--cream);
+  }
+  .info-row strong { font-size: .9rem; color: var(--forest); font-weight: 500; display: block; }
+  .info-row p { font-size: .85rem; color: #666; margin-top: .15rem; line-height: 1.5; }
+  .map-placeholder {
+    background: var(--forest);
+    border-radius: 4px;
+    min-height: 320px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    color: var(--cream); text-align: center;
+    padding: 2rem;
+    position: relative; overflow: hidden;
+  }
+  .map-placeholder .map-icon { font-size: 3rem; margin-bottom: 1rem; }
+  .map-placeholder p { font-size: .9rem; opacity: .7; margin-bottom: 1.5rem; }
+  .map-placeholder a {
+    background: var(--terra);
+    color: var(--white);
+    padding: .7rem 1.6rem;
+    font-size: .85rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: background .2s;
+  }
+  .map-placeholder a:hover { background: #a8522a; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--charcoal);
+    color: rgba(245,237,216,.55);
+    padding: 3rem 2rem;
+    text-align: center;
+  }
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: .5rem;
+  }
+  .footer-logo span { color: var(--terra); }
+  .footer-tagline {
+    font-family: 'Caveat', cursive;
+    font-size: 1.1rem;
+    color: var(--sage);
+    margin-bottom: 1.5rem;
+  }
+  .footer-links {
+    display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap;
+    list-style: none; margin-bottom: 2rem;
+  }
+  .footer-links a {
+    color: rgba(245,237,216,.5);
+    text-decoration: none; font-size: .82rem;
+    letter-spacing: .08em; text-transform: uppercase;
+    transition: color .2s;
+  }
+  .footer-links a:hover { color: var(--cream); }
+  .footer-bottom { font-size: .78rem; opacity: .4; margin-top: 1rem; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .about-grid, .visit-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .vibe-grid { grid-template-columns: 1fr 1fr; }
+    .vibe-tile:first-child { grid-row: span 1; }
+    .vibe-tall { min-height: 160px !important; }
+    section { padding: 4rem 1.25rem; }
+    .strip { gap: 1.5rem; }
+    .divider-v { display: none; }
+  }
+
+  /* ── ANIMATIONS ── */
+  .fade-in { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+  .fade-in.visible { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">Forest<span>House</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">Our Story</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#vibe">Vibe</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#visit" class="nav-cta">Visit Us</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <!-- Botanical SVG leaves -->
+  <svg class="hero-leaves" viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+    <!-- Large leaf top-left -->
+    <g fill="#8AAF8E">
+      <ellipse cx="60" cy="120" rx="120" ry="40" transform="rotate(-35 60 120)"/>
+      <ellipse cx="180" cy="60" rx="100" ry="30" transform="rotate(20 180 60)"/>
+      <ellipse cx="30" cy="200" rx="80" ry="25" transform="rotate(-55 30 200)"/>
+      <!-- Stem lines -->
+      <line x1="60" y1="120" x2="150" y2="300" stroke="#8AAF8E" stroke-width="2"/>
+      <line x1="180" y1="60" x2="150" y2="300" stroke="#8AAF8E" stroke-width="1.5"/>
+    </g>
+    <!-- Large leaf top-right -->
+    <g fill="#2D5A3D">
+      <ellipse cx="1140" cy="100" rx="130" ry="42" transform="rotate(40 1140 100)"/>
+      <ellipse cx="1020" cy="50" rx="90" ry="28" transform="rotate(-20 1020 50)"/>
+      <ellipse cx="1170" cy="190" rx="75" ry="22" transform="rotate(60 1170 190)"/>
+    </g>
+    <!-- Bottom left ferns -->
+    <g fill="#1C3A2A">
+      <ellipse cx="80" cy="720" rx="110" ry="35" transform="rotate(-25 80 720)"/>
+      <ellipse cx="40" cy="760" rx="90" ry="28" transform="rotate(10 40 760)"/>
+      <ellipse cx="160" cy="700" rx="75" ry="22" transform="rotate(-45 160 700)"/>
+    </g>
+    <!-- Bottom right -->
+    <g fill="#2D5A3D">
+      <ellipse cx="1120" cy="730" rx="120" ry="38" transform="rotate(30 1120 730)"/>
+      <ellipse cx="1180" cy="770" rx="85" ry="26" transform="rotate(-15 1180 770)"/>
+      <ellipse cx="1050" cy="760" rx="70" ry="20" transform="rotate(50 1050 760)"/>
+    </g>
+    <!-- Mid accents -->
+    <g fill="#8AAF8E" opacity=".5">
+      <ellipse cx="600" cy="50" rx="60" ry="18" transform="rotate(5 600 50)"/>
+      <ellipse cx="400" cy="780" rx="80" ry="24" transform="rotate(-10 400 780)"/>
+      <ellipse cx="800" cy="790" rx="70" ry="20" transform="rotate(15 800 790)"/>
+    </g>
+  </svg>
+
+  <div class="hero-content">
+    <span class="hero-eyebrow">Dwarka, New Delhi · Est. in love with good food</span>
+    <h1>Forest <em>House</em><br>Café</h1>
+    <p class="hero-sub">An airy, brick-walled escape in the heart of Dwarka — where every table feels like a terrace and every bite feels like coming home.</p>
+    <div class="hero-badges">
+      <span class="badge">Dine-In</span>
+      <span class="badge">Delivery</span>
+      <span class="badge">LGBTQ+ Friendly</span>
+      <span class="badge">₹400–₹1,200</span>
+    </div>
+    <div class="hero-btns">
+      <a href="https://swiggy.com" class="btn-primary" target="_blank">Order Online</a>
+      <a href="#visit" class="btn-ghost">Find Us</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- RATING STRIP -->
+<div class="strip">
+  <div class="strip-item">
+    <span class="num">4.3</span>
+    <div>
+      <div class="stars">★★★★☆</div>
+      <div class="label">858 Reviews</div>
+    </div>
+  </div>
+  <div class="divider-v"></div>
+  <div class="strip-item">
+    <span class="num">₹400</span>
+    <div class="label">Starting<br>per person</div>
+  </div>
+  <div class="divider-v"></div>
+  <div class="strip-item">
+    <span class="num">11 pm</span>
+    <div class="label">Open<br>until</div>
+  </div>
+  <div class="divider-v"></div>
+  <div class="strip-item">
+    <span class="num">Sec 17</span>
+    <div class="label">Dwarka,<br>New Delhi</div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-visual fade-in">
+        <div class="about-card">
+          <div class="about-card-quote">
+            "Awesome ambience, yummy food, superb service — it's a must-visit place in Dwarka."
+          </div>
+          <div class="about-card-attr">— Google Review ★★★★★</div>
+          <span class="about-tag">4.3 · 858 Reviews</span>
+        </div>
+        <div class="about-features" style="margin-top:1.5rem;">
+          <div class="feature-row">
+            <div class="feature-icon">🌿</div>
+            <div class="feature-text">
+              <strong>Nature-Inspired Ambiance</strong>
+              <p>Brick walls, open terrace, greenery — a calm oasis in the city</p>
+            </div>
+          </div>
+          <div class="feature-row">
+            <div class="feature-icon">🍽️</div>
+            <div class="feature-text">
+              <strong>Global Bites & North Indian Mains</strong>
+              <p>From wood-fired pizzas to rich kadhai curries</p>
+            </div>
+          </div>
+          <div class="feature-row">
+            <div class="feature-icon">☕</div>
+            <div class="feature-text">
+              <strong>Perfect Cappuccino Spot</strong>
+              <p>Peaceful enough to sip slow, vibrant enough to linger</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="fade-in" style="transition-delay:.15s">
+        <span class="section-label">Our Story</span>
+        <h2 class="section-title">Where the forest<br>meets the table</h2>
+        <p class="section-body">Forest House Café is an easygoing retreat tucked inside Pocket C, Sector 17 Dwarka. We built this space for people who want to slow down — to share a meal, breathe a little, and feel genuinely welcomed.</p>
+        <p class="section-body" style="margin-top:1rem;">Our menu travels — from thin-crust pizzas to chilli paneer, from strawberry shakes to biryani — but the feeling stays the same: honest, warm, and made with care.</p>
+        <p class="section-body" style="margin-top:1rem;">Whether you're catching up over mocktails on the terrace or bringing the family for dinner, this is your table. Stay as long as you like.</p>
+        <div style="margin-top:2rem; display:flex; gap:1rem; flex-wrap:wrap;">
+          <a href="tel:09999051009" class="btn-primary">📞 Call to Reserve</a>
+          <a href="https://zomato.com" target="_blank" class="btn-ghost" style="color:var(--forest); border-color:var(--forest);">See Menu on Zomato</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU HIGHLIGHTS -->
+<section class="menu-section" id="menu">
+  <div class="section-inner">
+    <div class="fade-in">
+      <span class="section-label">What We Serve</span>
+      <h2 class="section-title" style="color:var(--cream);">Menu <em style="font-style:italic;color:var(--sage);">highlights</em></h2>
+      <p class="section-body">A menu built to please every mood — from starters to mains, sips to sweets. All made fresh, all made with love.</p>
+    </div>
+    <div class="menu-grid fade-in" style="transition-delay:.1s">
+      <div class="menu-card">
+        <div class="menu-card-icon">🍕</div>
+        <h3>Thin Crust Pizza</h3>
+        <p>Loaded with cheese, available in veg & non-veg. Crispy base, generous toppings.</p>
+        <div class="price">~ ₹350 onwards</div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-icon">🍗</div>
+        <h3>Tandoori Chicken</h3>
+        <p>Smoky, spiced, straight from the tandoor. A crowd favourite every evening.</p>
+        <div class="price">~ ₹420 onwards</div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-icon">🥘</div>
+        <h3>Kadhai Chicken</h3>
+        <p>Rich, aromatic curry in the classic North Indian style. Best with butter naan.</p>
+        <div class="price">~ ₹380 onwards</div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-icon">🥪</div>
+        <h3>Club Sandwich</h3>
+        <p>Triple-decker, toasted to golden perfection. A café staple done right.</p>
+        <div class="price">~ ₹260 onwards</div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-icon">🍓</div>
+        <h3>Strawberry Shake</h3>
+        <p>Thick, chilled, and bursting with fresh strawberry flavour. Pure bliss.</p>
+        <div class="price">~ ₹180 onwards</div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-icon">🍫</div>
+        <h3>Chocolate Brownie</h3>
+        <p>Fudgy, warm, and dangerously good. Best paired with a cappuccino.</p>
+        <div class="price">~ ₹160 onwards</div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-icon">🌶️</div>
+        <h3>Chilli Paneer</h3>
+        <p>Indo-Chinese classic — crispy paneer tossed in a fiery, tangy sauce.</p>
+        <div class="price">~ ₹280 onwards</div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-icon">🍹</div>
+        <h3>Mocktails</h3>
+        <p>Refreshing house blends — from tropical twists to mint-cool coolers.</p>
+        <div class="price">~ ₹200 onwards</div>
+      </div>
+    </div>
+    <div class="menu-cta fade-in">
+      <a href="https://zomato.com" target="_blank" class="btn-primary">Full Menu on Zomato ↗</a>
+      &nbsp;&nbsp;
+      <a href="https://swiggy.com" target="_blank" class="btn-ghost" style="color:var(--cream);">Order on Swiggy ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- VIBE -->
+<section class="vibe" id="vibe">
+  <div class="section-inner">
+    <div class="fade-in">
+      <span class="section-label">The Feeling Here</span>
+      <h2 class="section-title">An airy space<br>with soul</h2>
+      <p class="section-body">Brick walls that breathe, a terrace that glows at dusk, and the kind of quiet that actually lets you talk. This is what we built Forest House for.</p>
+    </div>
+    <div class="vibe-grid fade-in" style="transition-delay:.1s">
+      <div class="vibe-tile">
+        <div class="vibe-box green vibe-tall">
+          <div class="vibe-emoji">🌿</div>
+          <div class="vibe-label">Nature-Inspired Interiors</div>
+          <div class="vibe-sub">Brick walls · Open air · Greenery</div>
+        </div>
+      </div>
+      <div class="vibe-tile">
+        <div class="vibe-box terra">
+          <div class="vibe-emoji">🌅</div>
+          <div class="vibe-label">Rooftop Terrace</div>
+          <div class="vibe-sub">Sunset views</div>
+        </div>
+      </div>
+      <div class="vibe-tile">
+        <div class="vibe-box sage">
+          <div class="vibe-emoji">☕</div>
+          <div class="vibe-label">Peaceful Cappuccino Moment</div>
+          <div class="vibe-sub">Slow mornings & evenings</div>
+        </div>
+      </div>
+      <div class="vibe-tile">
+        <div class="vibe-box cream2">
+          <div class="vibe-emoji" style="font-size:2rem">🏳️‍🌈</div>
+          <div class="vibe-label" style="color:var(--forest)">LGBTQ+ Friendly</div>
+          <div class="vibe-sub" style="color:#888">All are welcome here</div>
+        </div>
+      </div>
+      <div class="vibe-tile">
+        <div class="vibe-box forest-lt">
+          <div class="vibe-emoji">👨‍👩‍👧</div>
+          <div class="vibe-label">Family & Friends</div>
+          <div class="vibe-sub">Great for quality time</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews" id="reviews">
+  <div class="section-inner">
+    <div class="fade-in">
+      <span class="section-label">What People Say</span>
+      <h2 class="section-title">Straight from<br>our guests</h2>
+    </div>
+    <div class="reviews-grid fade-in" style="transition-delay:.1s">
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">Had a wonderful experience at Forest House Café! The ambiance is beautiful, peaceful, and perfect for spending quality time with friends and family. The food was delicious, well-presented, and served fresh.</p>
+        <div class="review-author">Anjali Rawat · 1 week ago</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">Such a nice ambiance and tasty, delicious food. Much recommended to visit. The staff was warm and the setting is unlike anywhere else in Dwarka.</p>
+        <div class="review-author">Manish · 2 weeks ago</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">Awesome ambience, yummy food, superb service. It's a must-visit place in Dwarka. Came for lunch and ended up staying for hours — the terrace is a gem.</p>
+        <div class="review-author">Google Reviewer</div>
+      </div>
+    </div>
+    <div style="margin-top:2.5rem; text-align:center" class="fade-in">
+      <p style="color:#888;font-size:.9rem;margin-bottom:1rem">4.3 stars · 858 reviews on Google</p>
+      <a href="https://maps.google.com" target="_blank" class="btn-primary">Read All Reviews ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- VISIT -->
+<section class="visit" id="visit">
+  <div class="section-inner">
+    <div class="fade-in" style="margin-bottom:3rem">
+      <span class="section-label">Plan Your Visit</span>
+      <h2 class="section-title">Come find us<br>in Dwarka</h2>
+    </div>
+    <div class="visit-grid fade-in">
+      <div class="info-block">
+        <div class="info-row">
+          <div class="info-icon">📍</div>
+          <div>
+            <strong>Address</strong>
+            <p>Plot no 32, 8, Pocket C, Sector 17 Dwarka<br>Dwarka, New Delhi, Delhi 110078</p>
+          </div>
+        </div>
+        <div class="info-row">
+          <div class="info-icon">🕐</div>
+          <div>
+            <strong>Hours</strong>
+            <p>Open daily · Closes at 11 pm<br><span style="color:var(--forest);font-weight:500">Open now</span> — come on in</p>
+          </div>
+        </div>
+        <div class="info-row">
+          <div class="info-icon">💰</div>
+          <div>
+            <strong>Price Range</strong>
+            <p>₹400 – ₹1,200 per person<br>As reported by 172 diners</p>
+          </div>
+        </div>
+        <div class="info-row">
+          <div class="info-icon">📞</div>
+          <div>
+            <strong>Reservations & Enquiries</strong>
+            <p><a href="tel:09999051009" style="color:var(--terra);text-decoration:none;font-weight:500">099990 51009</a></p>
+          </div>
+        </div>
+        <div class="info-row">
+          <div class="info-icon">🚗</div>
+          <div>
+            <strong>Options</strong>
+            <p>Dine-in · Drive-through · No-contact delivery</p>
+          </div>
+        </div>
+      </div>
+      <div class="map-placeholder">
+        <div class="map-icon">🗺️</div>
+        <p>Sector 17, Pocket C<br>Dwarka, New Delhi</p>
+        <a href="https://maps.google.com/maps?q=Plot+32+Pocket+C+Sector+17+Dwarka+New+Delhi" target="_blank">Open in Google Maps ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Forest<span>House</span> Café</div>
+  <div class="footer-tagline">Where every meal feels like a forest escape</div>
+  <ul class="footer-links">
+    <li><a href="#about">Our Story</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#vibe">Vibe</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#visit">Visit</a></li>
+    <li><a href="https://zomato.com" target="_blank">Zomato</a></li>
+    <li><a href="https://swiggy.com" target="_blank">Swiggy</a></li>
+  </ul>
+  <p class="footer-bottom">Plot 32, Pocket C, Sector 17 Dwarka, New Delhi 110078 · 099990 51009<br>© 2025 Forest House Café. Crafted with 🌿 for the love of good food.</p>
+</footer>
+
+<script>
+  // Sticky nav
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Fade-in on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
